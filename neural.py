@@ -50,6 +50,7 @@ class NeuralNet:
         self.act_function = sigmoid
         self.dact_function = d_sigmoid
 
+
     def evaluate(self, inputs: List[Any]) -> List[float]:
         """Carries out forward propagation on the neural net
 

@@ -29,23 +29,36 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
         normalized data where input features are mapped to 0-1 range (output already
         mapped in parse_line)
     """
-    leasts = len(data[0][0]) * [100.0]
-    mosts = len(data[0][0]) * [0.0]
+    new_dict = {}
+    for key, value in data_dict.items():
+        if isinstance(key, str):
+            if key.lower() in ['male', 'm']:
+                new_dict[1] = value
+            elif key.lower() in ['female', 'f']:
+                new_dict[0] = value
+            else:
+                new_dict[key] = value
+        else:
+            new_dict[key] = value
+        if isinstance(key, str):
+            if key.lower() in ['group a']:
+                new_dict[0] = value
+        elif isinstance(key, str):
+            if key.lower() in ['group b']:
+                new_dict[1] = value
+        elif isinstance(key, str):
+            if key.lower() in ['group c']:
+                new_dict[2] = value
+        elif isinstance(key, str):
+            if key.lower() in ['group d']:
+                new_dict[3] = value
+        elif isinstance(key, str):
+            if key.lower() in ['group e']:
+                new_dict[4] = value
+    return new_dict
 
-    for i in range(len(data)):
-        for j in range(len(data[i][0])):
-            if data[i][0][j] < leasts[j]:
-                leasts[j] = data[i][0][j]
-            if data[i][0][j] > mosts[j]:
-                mosts[j] = data[i][0][j]
 
-    for i in range(len(data)):
-        for j in range(len(data[i][0])):
-            data[i][0][j] = (data[i][0][j] - leasts[j]) / (mosts[j] - leasts[j])
-    return data
-
-
-with open("wine_data.txt", "r") as f:
+with open("study_performance.csv", "r") as f:
     training_data = [parse_line(line) for line in f.readlines() if len(line) > 4]
 
 # print(training_data)
